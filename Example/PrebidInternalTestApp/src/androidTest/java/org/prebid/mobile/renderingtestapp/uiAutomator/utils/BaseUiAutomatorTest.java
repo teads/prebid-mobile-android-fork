@@ -46,7 +46,11 @@ public class BaseUiAutomatorTest {
     protected Resources resources;
 
     @Rule
-    public RetryRule retryRule = new RetryRule(5);
+    public RetryRule retryRule = new RetryRule(maxTries());
+
+    protected int maxTries() {
+        return 5;
+    }
 
     @Before
     public void setup() throws RemoteException, InterruptedException {

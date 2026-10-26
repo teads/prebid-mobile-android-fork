@@ -846,6 +846,14 @@ class DemoItemProvider private constructor() {
             )
             demoList.add(
                 DemoItem(
+                    getString(R.string.demo_bidding_in_app_interstitial_custom_pbs),
+                    R.id.action_header_bidding_to_custom_pbs_interstitial,
+                    ppmInterstitialTagList,
+                    createBannerBundle(null, null, MIN_WIDTH_PERC, MIN_HEIGHT_PERC)
+                )
+            )
+            demoList.add(
+                DemoItem(
                     getString(R.string.demo_bidding_in_app_interstitial_320_480_no_bids),
                     ppmInterstitialAction,
                     ppmInterstitialTagList,

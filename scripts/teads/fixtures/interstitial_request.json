@@ -1,0 +1,58 @@
+{
+  "id": "teads-contract-1",
+  "imp": [
+    {
+      "id": "imp-1",
+      "instl": 1,
+      "banner": {
+        "format": [
+          {
+            "w": 320,
+            "h": 480
+          }
+        ],
+        "api": [
+          3,
+          5
+        ]
+      },
+      "secure": 0,
+      "ext": {
+        "prebid": {
+          "storedrequest": {
+            "id": "outbrain-imp-display"
+          }
+        }
+      }
+    }
+  ],
+  "app": {
+    "bundle": "org.prebid.mobile.renderingtestapp",
+    "publisher": {
+      "id": "outbrain-req"
+    },
+    "content": {
+      "url": "https://mobile-demo.outbrain.com"
+    }
+  },
+  "device": {
+    "os": "Android",
+    "ua": "Mozilla/5.0 (Linux; Android 14)",
+    "w": 1080,
+    "h": 2400,
+    "ifa": "00000000-0000-0000-0000-000000000000"
+  },
+  "test": 1,
+  "ext": {
+    "prebid": {
+      "storedrequest": {
+        "id": "outbrain-req"
+      },
+      "targeting": {},
+      "cache": {
+        "bids": {}
+      },
+      "debug": true
+    }
+  }
+}

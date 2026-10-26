@@ -117,6 +117,15 @@
             app:popUpTo="@+id/headerBiddingFragment" />
 
         <action
+            android:id="@+id/action_header_bidding_to_custom_pbs_interstitial"
+            app:destination="@id/navigation_custom_pbs_interstitial"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/headerBiddingFragment" />
+
+        <action
             android:id="@+id/action_header_bidding_to_in_app_interstitial_plugin_event_listener"
             app:destination="@id/navigation_in_app_interstitial_plugin_event_listener"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -694,6 +703,11 @@
         android:id="@+id/navigation_in_app_interstitial"
         android:name="org.prebid.mobile.renderingtestapp.plugplay.bidding.ppm.PpmInterstitialFragment"
         android:label="In-App Interstitial" />
+
+    <fragment
+        android:id="@+id/navigation_custom_pbs_interstitial"
+        android:name="org.prebid.mobile.renderingtestapp.plugplay.bidding.ppm.CustomPbsInterstitialFragment"
+        android:label="Custom PBS Interstitial" />
 
     <fragment
         android:id="@+id/navigation_in_app_interstitial_plugin_event_listener"

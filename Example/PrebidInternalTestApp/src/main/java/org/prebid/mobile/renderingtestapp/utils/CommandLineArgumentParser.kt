@@ -55,6 +55,11 @@ object CommandLineArgumentParser {
             GppHelper(preferences).addGppSidTestValue(gppSidValue)
         }
 
+        /* Custom Prebid Server, used by the "Custom PBS" examples */
+        extras.getString("PBS_HOST")?.let { CustomPbsSettings.hostUrl = it }
+        extras.getString("PBS_ACCOUNT_ID")?.let { CustomPbsSettings.accountId = it }
+        extras.getString("PBS_CONFIG_ID")?.let { CustomPbsSettings.configId = it }
+
         extras.getString("EXTRA_OPEN_RTB")?.let {
             extractOpenRtbExtra(it, context)
         }
