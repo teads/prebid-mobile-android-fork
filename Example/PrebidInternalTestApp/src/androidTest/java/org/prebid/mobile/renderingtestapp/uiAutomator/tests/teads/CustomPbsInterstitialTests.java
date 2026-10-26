@@ -22,8 +22,10 @@ import org.prebid.mobile.renderingtestapp.uiAutomator.pages.bidding.ppm.CustomPb
 import org.prebid.mobile.renderingtestapp.uiAutomator.utils.BaseUiAutomatorTest;
 import org.prebid.mobile.renderingtestapp.utils.CustomPbsSettings;
 
+import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -44,6 +46,8 @@ public class CustomPbsInterstitialTests extends BaseUiAutomatorTest {
     private static final int CLOSE_BUTTON_TIMEOUT_S = 5;
     private static final int CENTER_TOLERANCE_PX = 8;
     private static final int JS_LIBRARIES_TIMEOUT_S = 20;
+    private static final int EVENT_TIMEOUT_MS = 5000;
+    private static final int EVENT_SETTLE_MS = 2000;
 
     private String expectedSeat;
 
@@ -131,6 +135,27 @@ public class CustomPbsInterstitialTests extends BaseUiAutomatorTest {
                 .sdkEventShouldNotBePresent(AdBasePage.SdkEvent.onAdFailed, 0);
     }
 
+    /** C7: the win and impression URLs from the bid are called. The impression only once, and only after show. */
+    @Test
+    public void testImpressionEvents() throws Exception {
+        CustomPbsInterstitialPage page = openExample()
+                .sdkEventShouldBePresent(AdBasePage.SdkEvent.onAdLoaded, LOAD_TIMEOUT_MS);
+        JSONObject bidInfo = page.getBidInfo();
+        String winUrl = bidInfo.getString("winEventUrl");
+        String impUrl = bidInfo.getString("impEventUrl");
+
+        Thread.sleep(EVENT_SETTLE_MS);
+        assertEquals("impression sent before the ad was shown", 0, countRequests(impUrl));
+
+        page.showPrebidInterstitial().creativeShouldNotBeBlank();
+        assertTrue("impression not sent after show", waitForRequest(impUrl, EVENT_TIMEOUT_MS));
+        assertTrue("win not sent", waitForRequest(winUrl, EVENT_TIMEOUT_MS));
+
+        Thread.sleep(EVENT_SETTLE_MS);
+        assertEquals("impression sent more than once", 1, countRequests(impUrl));
+        page.closeButtonShouldBeDisplayedWithin(CLOSE_BUTTON_TIMEOUT_S).closeInterstitial();
+    }
+
     /** C5 (SHOULD) */
     @Test
     public void testCreativeLayout() {
@@ -202,6 +227,33 @@ public class CustomPbsInterstitialTests extends BaseUiAutomatorTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static boolean waitForRequest(String url, long timeoutMs) throws Exception {
+        long deadline = System.currentTimeMillis() + timeoutMs;
+        while (System.currentTimeMillis() < deadline) {
+            if (countRequests(url) > 0) {
+                return true;
+            }
+            Thread.sleep(250);
+        }
+        return false;
+    }
+
+    /** The SDK logs every request it sends. Event URLs hold the bid id, so older runs don't match. */
+    private static int countRequests(String url) throws IOException {
+        Process logcat = Runtime.getRuntime().exec(new String[]{"logcat", "-d", "-s", "PrebidBaseNetworkTask:D"});
+        String expected = "Sending request to the URL: " + url;
+        int count = 0;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(logcat.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.endsWith(expected)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     private static boolean waitForSdkJsLibraries() throws InterruptedException {

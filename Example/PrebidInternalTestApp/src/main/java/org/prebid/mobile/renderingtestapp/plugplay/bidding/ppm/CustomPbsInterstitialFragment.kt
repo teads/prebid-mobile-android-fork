@@ -65,7 +65,9 @@ class CustomPbsInterstitialFragment : PpmInterstitialFragment() {
             .put("type", bid.type)
             .put("targeting", JSONObject(bidResponse.targeting as Map<*, *>))
             .put("hasWinEvent", !bid.prebid?.winEventUrl.isNullOrEmpty())
+            .put("winEventUrl", bid.prebid?.winEventUrl)
             .put("hasImpEvent", !bid.prebid?.impEventUrl.isNullOrEmpty())
+            .put("impEventUrl", bid.prebid?.impEventUrl)
 
         // Present because CustomPbsSettings enables PBS debug.
         val request = responseJson.optJSONObject("ext")?.optJSONObject("debug")?.optJSONObject("resolvedrequest")
