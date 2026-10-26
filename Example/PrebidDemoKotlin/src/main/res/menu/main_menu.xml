@@ -6,4 +6,8 @@
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/settings"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/prebid_server"
+        android:title="@string/prebid_server"
+        app:showAsAction="never" />
 </menu>

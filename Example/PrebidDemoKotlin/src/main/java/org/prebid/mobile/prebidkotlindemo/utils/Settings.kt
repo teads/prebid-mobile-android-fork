@@ -12,6 +12,7 @@ class Settings private constructor(
         private const val KEY_REFRESH_TIME = "KEY_REFRESH_TIME"
         private const val KEY_LAST_INTEGRATION_KIND = "KEY_LAST_INTEGRATION_KIND"
         private const val KEY_LAST_AD_FORMAT = "KEY_LAST_AD_FORMAT"
+        private const val KEY_PREBID_SERVER = "KEY_PREBID_SERVER"
 
         private var INSTANCE: Settings? = null
 
@@ -43,6 +44,15 @@ class Settings private constructor(
         get() = preferences.getInt(KEY_LAST_AD_FORMAT, 0)
         set(value) {
             preferences.edit().putInt(KEY_LAST_AD_FORMAT, value).apply()
+        }
+
+    var prebidServer: PrebidServer
+        get() {
+            val server = PrebidServer.values().find { it.name == preferences.getString(KEY_PREBID_SERVER, null) }
+            return server?.takeIf { it.isAvailable } ?: PrebidServer.PREBID
+        }
+        set(value) {
+            preferences.edit().putString(KEY_PREBID_SERVER, value.name).apply()
         }
 
     /**

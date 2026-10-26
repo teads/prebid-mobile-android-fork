@@ -136,6 +136,9 @@
             android:name=".activities.ads.inapp.InAppDisplayInterstitialActivity"
             android:exported="true" />
         <activity
+            android:name=".activities.ads.teads.TeadsDisplayInterstitialActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.ads.inapp.InAppVideoInterstitialActivity"
             android:exported="true" />
         <activity

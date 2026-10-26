@@ -8,6 +8,10 @@
 
     <string name="search">Search</string>
     <string name="settings">Settings</string>
+    <string name="prebid_server">Prebid server</string>
+    <string name="prebid_server_prebid">Prebid test server</string>
+    <string name="prebid_server_teads">Teads test server</string>
+    <string name="prebid_server_teads_missing_host">Teads server host is not set. Add teadsPbsHost to local.properties and rebuild.</string>
     <string name="settings_text">Demonstration of Prebid SDK customization in the Demo App will be introduced soon.</string>
 
     <string name="gam_original_display_banner_320x50">GAM (Original API) Display Banner 320x50</string>
@@ -41,6 +45,7 @@
     <string name="in_app_video_banner">In-App Video Banner</string>
     <string name="in_app_multiformat_banner">In-App Multiformat Banner</string>
     <string name="in_app_display_interstitial">In-App Display Interstitial</string>
+    <string name="teads_display_interstitial">Teads Display Interstitial</string>
     <string name="in_app_video_interstitial">In-App Video Interstitial</string>
     <string name="in_app_video_interstitial_end_card">In-App Video Interstitial With End Card</string>
     <string name="in_app_video_interstitial_multi_format">In-App Video Interstitial Multi-Format</string>

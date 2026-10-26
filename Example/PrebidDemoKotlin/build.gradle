@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+// Teads test Prebid Server host. Not in the repo: set teadsPbsHost in local.properties or pass -PteadsPbsHost.
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def teadsPbsHost = project.findProperty('teadsPbsHost') ?: localProperties.getProperty('teadsPbsHost', '')
+
 android {
     namespace "org.prebid.mobile.prebidkotlindemo"
     setCompileSdkVersion(34)
@@ -13,6 +21,7 @@ android {
         applicationId "org.prebid.mobile.prebidkotlindemo"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        buildConfigField "String", "TEADS_PBS_HOST", "\"${teadsPbsHost}\""
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -23,6 +32,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        buildConfig true
     }
 }
 

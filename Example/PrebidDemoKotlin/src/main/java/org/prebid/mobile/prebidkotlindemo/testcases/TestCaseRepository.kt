@@ -6,6 +6,7 @@ import org.prebid.mobile.prebidkotlindemo.activities.ads.applovin.*
 import org.prebid.mobile.prebidkotlindemo.activities.ads.gam.original.*
 import org.prebid.mobile.prebidkotlindemo.activities.ads.gam.rendering.*
 import org.prebid.mobile.prebidkotlindemo.activities.ads.inapp.*
+import org.prebid.mobile.prebidkotlindemo.activities.ads.teads.TeadsDisplayInterstitialActivity
 
 object TestCaseRepository {
 
@@ -190,6 +191,12 @@ object TestCaseRepository {
             AdFormat.DISPLAY_INTERSTITIAL,
             IntegrationKind.NO_AD_SERVER,
             InAppDisplayInterstitialActivity::class.java,
+        ),
+        TestCase(
+            R.string.teads_display_interstitial,
+            AdFormat.DISPLAY_INTERSTITIAL,
+            IntegrationKind.NO_AD_SERVER,
+            TeadsDisplayInterstitialActivity::class.java,
         ),
         TestCase(
             R.string.in_app_video_interstitial,
