@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.mraid.methods.network;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -83,11 +84,14 @@ public class UrlResolutionTask extends AsyncTask<String, Void, String> {
         final URL url = new URL(urlString);
 
         HttpURLConnection httpUrlConnection = null;
+        ClickTiming.mark("1st check hop start (UrlResolutionTask): " + urlString);
         try {
             httpUrlConnection = (HttpURLConnection) url.openConnection();
             httpUrlConnection.setInstanceFollowRedirects(false);
 
-            return resolveRedirectLocation(urlString, httpUrlConnection);
+            String location = resolveRedirectLocation(urlString, httpUrlConnection);
+            ClickTiming.mark("1st check hop response " + httpUrlConnection.getResponseCode() + " -> " + location);
+            return location;
         }
         finally {
             if (httpUrlConnection != null) {
@@ -101,6 +105,7 @@ public class UrlResolutionTask extends AsyncTask<String, Void, String> {
                     LogUtil.error(TAG, "IOException when closing httpUrlConnection. Ignoring.");
                 }
                 httpUrlConnection.disconnect();
+                ClickTiming.mark("1st check hop connection closed (body drained)");
             }
         }
     }
@@ -138,6 +143,7 @@ public class UrlResolutionTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(@Nullable final String resolvedUrl) {
         super.onPostExecute(resolvedUrl);
+        ClickTiming.mark("1st check done, back on main thread: " + resolvedUrl);
 
         if (isCancelled() || resolvedUrl == null) {
             onCancelled();

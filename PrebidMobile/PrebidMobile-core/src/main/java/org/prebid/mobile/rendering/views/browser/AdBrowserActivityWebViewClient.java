@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.views.browser;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import org.prebid.mobile.LogUtil;
@@ -36,7 +37,14 @@ class AdBrowserActivityWebViewClient extends WebViewClient {
     }
 
     @Override
+    public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+        ClickTiming.mark("browser page started: " + url);
+        super.onPageStarted(view, url, favicon);
+    }
+
+    @Override
     public void onPageFinished(WebView view, String url) {
+        ClickTiming.mark("browser page finished: " + url);
         if (adBrowserWebViewClientListener != null) {
             adBrowserWebViewClientListener.onPageFinished();
         }
