@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.views.webview.mraid;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -251,7 +252,9 @@ public class BaseJSInterface implements JSInterface {
     @Override
     @JavascriptInterface
     public void open(String url) {
+        ClickTiming.start("MRAID open: " + url);
         adBaseView.sendClickCallBack(url);
+        ClickTiming.mark("click callback sent (onAdClicked)");
 
         notifyMraidEventHandler(ACTION_OPEN, url);
     }
@@ -407,6 +410,7 @@ public class BaseJSInterface implements JSInterface {
         params.requestType = "GET";
         params.userAgent = AppInfoManager.getUserAgent();
 
+        ClickTiming.mark("2nd check start (GetOriginalUrlTask): " + url);
         GetOriginalUrlTask redirectTask = new GetOriginalUrlTask(new OriginalUrlResponseCallBack(listener));
         redirectedUrlAsyncTask = redirectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
     }

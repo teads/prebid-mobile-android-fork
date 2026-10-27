@@ -100,6 +100,7 @@
     <string name="demo_bidding_in_app_banners_and_interstitial">Banners and Interstitial (In-App)</string>
     <string name="demo_bidding_in_app_banner_320_50_creative_factory">Banner 320x50 Server-Side Creative Factory Timeout (In-App)</string>
     <string name="demo_bidding_in_app_interstitial_320_480">Display Interstitial 320x480 (In-App)</string>
+    <string name="demo_bidding_in_app_interstitial_custom_pbs">Display Interstitial Custom PBS (In-App)</string>
     <string name="demo_bidding_in_app_interstitial_320_480_custom_renderer">Display Interstitial 320x480 [Custom Renderer] (In-App)</string>
     <string name="demo_bidding_in_app_interstitial_320_480_custom_renderer_plugin_event_listener">Display Interstitial 320x480 [Custom Renderer, PluginEventListener] (In-App)</string>
     <string name="demo_bidding_in_app_interstitial_320_480_no_bids">Display Interstitial 320x480 [noBids] (In-App)</string>

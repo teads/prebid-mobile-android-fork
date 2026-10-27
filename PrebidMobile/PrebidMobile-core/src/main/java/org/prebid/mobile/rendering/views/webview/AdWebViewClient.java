@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.views.webview;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
@@ -201,6 +202,7 @@ public class AdWebViewClient extends WebViewClient {
     }
 
     private void handleWebViewClick(String url, WebViewBase webViewBase) {
+        ClickTiming.start("WebView click: " + url);
         urls.clear();
 
         loadingFinished = false;

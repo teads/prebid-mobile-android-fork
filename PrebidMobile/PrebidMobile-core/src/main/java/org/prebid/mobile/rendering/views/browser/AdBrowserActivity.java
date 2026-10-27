@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.views.browser;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
@@ -97,6 +98,7 @@ public final class AdBrowserActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ClickTiming.mark("AdBrowserActivity.onCreate");
 
         initWindow();
 

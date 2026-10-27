@@ -23,6 +23,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -32,6 +34,7 @@ import org.prebid.mobile.PrebidMobile
 import org.prebid.mobile.prebidkotlindemo.R
 import org.prebid.mobile.prebidkotlindemo.databinding.ActivityMainBinding
 import org.prebid.mobile.prebidkotlindemo.testcases.*
+import org.prebid.mobile.prebidkotlindemo.utils.PrebidServer
 import org.prebid.mobile.prebidkotlindemo.utils.Settings
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         initSpinners()
         initSearch()
         initList()
+        updateServerSubtitle()
 
         PrebidMobile.checkGoogleMobileAdsCompatibility(MobileAds.getVersion().toString())
     }
@@ -66,7 +70,36 @@ class MainActivity : AppCompatActivity() {
             startActivity(SettingsActivity.getIntent(this))
             return true
         }
+        if (item.itemId == R.id.prebid_server) {
+            showServerPicker()
+            return true
+        }
         return false
+    }
+
+    private fun showServerPicker() {
+        val servers = PrebidServer.values()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.prebid_server)
+            .setSingleChoiceItems(
+                servers.map { getString(it.titleRes) }.toTypedArray(),
+                servers.indexOf(Settings.get().prebidServer)
+            ) { dialog, which ->
+                val server = servers[which]
+                if (server.isAvailable) {
+                    Settings.get().prebidServer = server
+                    server.apply()
+                    updateServerSubtitle()
+                } else {
+                    Toast.makeText(this, R.string.prebid_server_teads_missing_host, Toast.LENGTH_LONG).show()
+                }
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun updateServerSubtitle() {
+        supportActionBar?.subtitle = getString(Settings.get().prebidServer.titleRes)
     }
 
 

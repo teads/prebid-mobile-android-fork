@@ -20,6 +20,7 @@ import androidx.test.uiautomator.UiDevice;
 
 import org.prebid.mobile.renderingtestapp.uiAutomator.pages.PageFactory;
 import org.prebid.mobile.renderingtestapp.uiAutomator.pages.bidding.gam.GamInterstitialPage;
+import org.prebid.mobile.renderingtestapp.uiAutomator.pages.bidding.ppm.CustomPbsInterstitialPage;
 import org.prebid.mobile.renderingtestapp.uiAutomator.pages.bidding.ppm.PpmInterstitialPage;
 
 public class InterstitialPageFactory extends PageFactory {
@@ -31,6 +32,11 @@ public class InterstitialPageFactory extends PageFactory {
     public PpmInterstitialPage goToPpmInterstitialExample(String example) {
         findListItem(example);
         return new PpmInterstitialPage(device);
+    }
+
+    public CustomPbsInterstitialPage goToCustomPbsInterstitialExample(String example) {
+        findListItem(example);
+        return new CustomPbsInterstitialPage(device);
     }
 
     public GamInterstitialPage goToGamInterstitialExample(String example) {

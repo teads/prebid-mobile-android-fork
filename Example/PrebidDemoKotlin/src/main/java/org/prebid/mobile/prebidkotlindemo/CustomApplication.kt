@@ -35,17 +35,18 @@ class CustomApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Settings.init(this)
         initPrebidSDK()
         initAdMob()
         initApplovinMax()
         TargetingParams.setSubjectToGDPR(true)
-        Settings.init(this)
     }
 
     private fun initPrebidSDK() {
-        PrebidMobile.setPrebidServerAccountId("0689a263-318d-448b-a3d4-b02e8a709d9d")
-        PrebidMobile.setCustomStatusEndpoint("https://prebid-server-test-j.prebid.org/status")
-        PrebidMobile.initializeSdk(applicationContext, "https://prebid-server-test-j.prebid.org/openrtb2/auction") { status ->
+        val server = Settings.get().prebidServer
+        PrebidMobile.setPrebidServerAccountId(server.accountId)
+        PrebidMobile.setCustomStatusEndpoint(server.statusUrl)
+        PrebidMobile.initializeSdk(applicationContext, server.hostUrl) { status ->
             if (status == InitializationStatus.SUCCEEDED) {
                 Log.d(TAG, "SDK initialized successfully!")
             } else {

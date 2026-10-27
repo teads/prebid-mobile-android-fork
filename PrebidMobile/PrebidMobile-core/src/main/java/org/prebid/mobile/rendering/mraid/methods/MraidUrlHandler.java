@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.mraid.methods;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import android.content.Context;
 import androidx.annotation.VisibleForTesting;
 import org.prebid.mobile.LogUtil;
@@ -50,6 +51,7 @@ public class MraidUrlHandler {
 
         if (!urlHandleInProgress) {
             urlHandleInProgress = true;
+            ClickTiming.mark("UrlHandler.handleUrl: " + url);
             createUrlHandler(broadcastId).handleUrl(context, url, null, true); // navigation is performed by user
         }
     }

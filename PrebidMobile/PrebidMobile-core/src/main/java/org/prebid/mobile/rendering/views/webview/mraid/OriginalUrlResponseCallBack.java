@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.views.webview.mraid;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import org.prebid.mobile.LogUtil;
 import org.prebid.mobile.rendering.mraid.methods.network.RedirectUrlListener;
 import org.prebid.mobile.rendering.networking.BaseNetworkTask;
@@ -38,6 +39,7 @@ class OriginalUrlResponseCallBack implements ResponseHandler {
             return;
         }
 
+        ClickTiming.mark("2nd check done: " + result.originalUrl + " (" + result.contentType + ")");
         if (redirectUrlListener != null) {
             redirectUrlListener.onSuccess(result.originalUrl, result.contentType);
         }

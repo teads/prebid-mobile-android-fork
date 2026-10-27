@@ -16,6 +16,7 @@
 
 package org.prebid.mobile.rendering.utils.url.action;
 
+import org.prebid.mobile.rendering.utils.ClickTiming;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -112,6 +113,7 @@ public class MraidInternalBrowserAction implements UrlAction {
             mraidVariableContainer.setUrlForLaunching(url);
         }
 
+        ClickTiming.mark("launching AdBrowserActivity");
         ExternalViewerUtils.startBrowser(context, mraidVariableContainer.getUrlForLaunching(), broadcastId, true, null);
     }
 }
